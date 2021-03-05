@@ -15,7 +15,7 @@ class ListSegments:
     PATH = "/segments"
 
     @classmethod
-    def run(cls, data):
+    def run(cls):
         segments = Document.getCurrentDocument().getSegmentsList()
         return [segment.getName() for segment in segments]
 
@@ -24,11 +24,11 @@ class ListProcedures:
     PATH = "/procedures"
 
     @classmethod
-    def run(cls, data):
-        if "segment" not in data.keys():
+    def run(cls, segment_name):
+        if not segment_name:
             raise Exception("did not specify a segment name")
 
-        segment = Document.getCurrentDocument().getSegmentByName(data.get("segment"))
+        segment = Document.getCurrentDocument().getSegmentByName(segment_name)
 
         named_procedures = []
         for label_name, label_address in zip(
@@ -48,10 +48,7 @@ class DecompileProcedure:
     PATH = "/decompile"
 
     @classmethod
-    def run(cls, data):
-        segment_name = data.get("segment")
-        procedure_address = data.get("address")
-
+    def run(cls, segment_name, procedure_address):
         if not procedure_address or not segment_name:
             raise Exception("did not specify a segment name or procedure address")
 
@@ -75,7 +72,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             if self.path == handler.PATH:
 
                 try:
-                    data_response = handler.run(posted_data)
+                    data_response = handler.run(**posted_data)
                     json.dumps(data_response)
                     self.send_response(200)
                 except TypeError:
