@@ -11,7 +11,7 @@ import logging
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 
-class ListSegmentsHandler:
+class ListSegments:
     PATH = "/segments"
 
     @classmethod
@@ -71,7 +71,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         data_response = None
         error = None
 
-        for handler in [ListSegmentsHandler, ListProcedures, DecompileProcedure]:
+        for handler in [ListSegments, ListProcedures, DecompileProcedure]:
             if self.path == handler.PATH:
 
                 try:
