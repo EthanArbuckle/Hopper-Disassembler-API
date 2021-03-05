@@ -75,15 +75,17 @@ class RequestHandler(BaseHTTPRequestHandler):
                     data_response = handler.run(**posted_data)
                     json.dumps(data_response)
                     self.send_response(200)
-                except TypeError:
-                    data_response = str(response)
+                except TypeError as e:
+                    self.send_response(500)
+                    error = str(e)
                 except Exception as e:
                     self.send_response(500)
                     error = str(e)
 
-                response = {"data": data_response}
+                response = { "data": data_response }
                 if error:
                     response["error"] = error
+                
                 self.send_header("Content-type", "application/json")
                 self.end_headers()
                 self.wfile.write(json.dumps(response).encode("utf-8"))
