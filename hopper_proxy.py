@@ -91,7 +91,7 @@ class RequestHandler(BaseHTTPRequestHandler):
                 self.wfile.write(json.dumps(response).encode("utf-8"))
 
 
-httpd = HTTPServer(("", 3100), RequestHandler)
+httpd = HTTPServer(("", 52349), RequestHandler)
 
 try:
     httpd.serve_forever()
