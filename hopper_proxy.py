@@ -1,3 +1,11 @@
+#
+#  hopper_proxy.py
+#  IDA Objc
+#  
+#  Created by Ethan Arbuckle on 2021-03-05
+#  Copyright (c) 2021 Ethan Arbuckle and Tanner Bennett. All rights reserved.
+#
+
 import json
 import logging
 from http.server import BaseHTTPRequestHandler, HTTPServer
