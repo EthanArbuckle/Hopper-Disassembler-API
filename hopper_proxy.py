@@ -57,9 +57,7 @@ class ListProcedures:
         segment = Document.getCurrentDocument().getSegmentByName(segment_name)
 
         named_procedures = []
-        for label_name, label_address in zip(
-            segment.getLabelsList(), segment.getNamedAddresses()
-        ):
+        for label_name, label_address in zip(segment.getLabelsList(), segment.getNamedAddresses()):
             named_procedures.append(
                 {
                     "label": label_name,
@@ -68,6 +66,26 @@ class ListProcedures:
             )
 
         return named_procedures
+
+
+class ListStrings:
+    PATH = "/strings"
+
+    @classmethod
+    def run(cls):
+        doc = Document.getCurrentDocument()
+        cstrings_sect = doc.getSectionByName("__cstring")
+        text_seg = doc.getSegmentByName("__TEXT")
+        cstring_start = cstrings_sect.getStartingAddress()
+
+        string_cursor = 0
+        strings = []
+        while string_cursor < cstrings_sect.getLength():
+            stringlen = text_seg.getObjectLength(cstring_start + string_cursor)
+            string = text_seg.readBytes(cstring_start + string_cursor, stringlen - 1).strip()
+            string_cursor += max(stringlen, 1)
+            strings.append(string)
+        return strings
 
 
 class DecompileProcedure:
@@ -87,14 +105,12 @@ class DecompileProcedure:
 class RequestHandler(BaseHTTPRequestHandler):
     def do_POST(self):
         content_length = int(self.headers.get("Content-Length", 0))
-        posted_data = (
-            json.loads(self.rfile.read(content_length)) if content_length > 0 else {}
-        )
+        posted_data = json.loads(self.rfile.read(content_length)) if content_length > 0 else {}
 
         data_response = None
         error = None
 
-        for handler in [ListSegments, ListProcedures, DecompileProcedure, TerminateHopper]:
+        for handler in [ListSegments, ListProcedures, DecompileProcedure, TerminateHopper, ListStrings]:
             if self.path == handler.PATH:
 
                 try:
@@ -118,6 +134,7 @@ class RequestHandler(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
+
     httpd = HTTPServer(("", 52349), RequestHandler)
 
     try:
