@@ -1,6 +1,9 @@
 import subprocess
 import time
 from pathlib import Path
+from hopper_proxy import TerminateHopper
+
+TerminateHopper.kill_hopper()
 
 testbin_path = Path("lzssdec").resolve()
 proxy_script_path = Path("hopper_proxy.py").resolve()
