@@ -102,6 +102,35 @@ class DecompileProcedure:
         return procedure.decompile()
 
 
+class DisassembleProcedure:
+    PATH = "/disassemble"
+
+    @classmethod
+    def run(cls, segment_name, procedure_address):
+        if not procedure_address or not segment_name:
+            raise Exception("did not specify a segment name or procedure address")
+
+        disassembly = ""
+
+        seg = Document.getCurrentDocument().getSegmentByName(segment_name)
+        procedure = seg.getProcedureAtAddress(procedure_address)
+        for basic_block in procedure.basicBlockIterator():
+            basic_block_start = basic_block.getStartingAddress()
+            instr_cursor = basic_block_start
+            while instr_cursor < basic_block.getEndingAddress():
+                instr = seg.getInstructionAtAddress(instr_cursor)
+                instr_args = [instr.getFormattedArgument(i) for i in xrange(instr.getArgumentCount())]
+
+                instr_string = instr.getInstructionString() + "  "
+                instr_string += ", ".join(instr_args)
+                instr_string += "\n"
+                disassembly += instr_string
+
+                instr_cursor += instr.getInstructionLength()
+        # Maybe this should return a list of instructions, instead of combining them into 1 string?
+        return disassembly
+
+
 class RequestHandler(BaseHTTPRequestHandler):
     def do_POST(self):
         content_length = int(self.headers.get("Content-Length", 0))
@@ -110,7 +139,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         data_response = None
         error = None
 
-        for handler in [ListSegments, ListProcedures, DecompileProcedure, TerminateHopper, ListStrings]:
+        for handler in [ListSegments, ListProcedures, DecompileProcedure, TerminateHopper, ListStrings, DisassembleProcedure]:
             if self.path == handler.PATH:
 
                 try:
