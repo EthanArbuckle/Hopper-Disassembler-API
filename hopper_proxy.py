@@ -27,11 +27,9 @@ class TerminateHopper:
             if "Hopper" in ps_line:
                 components = ps_line.split(" ")
                 # PID is the first number
-                pid = [component for component in components if component.isnumeric()][
-                    0
-                ]
+                pid = [component for component in components if component.isnumeric()][0]
                 # Terminate it
-                subprocess.run(["kill", pid])
+                subprocess.check_output(["kill", pid])
 
     @classmethod
     def run(cls):
