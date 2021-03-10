@@ -50,20 +50,18 @@ class ListProcedures:
     PATH = "/procedures"
 
     @classmethod
-    def run(cls, segment_name):
-        if not segment_name:
-            raise Exception("did not specify a segment name")
-
-        segment = Document.getCurrentDocument().getSegmentByName(segment_name)
+    def run(cls):
 
         named_procedures = []
-        for label_name, label_address in zip(segment.getLabelsList(), segment.getNamedAddresses()):
-            named_procedures.append(
-                {
-                    "label": label_name,
-                    "address": label_address,
-                }
-            )
+        for segment_name in ListSegments.run():
+            segment = Document.getCurrentDocument().getSegmentByName(segment_name)
+            for label_address in segment.getNamedAddresses():
+                named_procedures.append(
+                    {
+                        "label": segment.getDemangledNameAtAddress(label_address),
+                        "address": label_address,
+                    }
+                )
 
         return named_procedures
 
@@ -95,7 +93,7 @@ class DecompileProcedure:
     def run(cls, procedure_address):
         if not procedure_address:
             raise Exception("did not specify procedure address")
-        
+
         # Hopper's API requires you to know the segment that contains a procedure (even though procs are
         # referenced by their absolute address in the binary).
         # Try all known segments
@@ -125,7 +123,7 @@ class DisassembleProcedure:
             segment = Document.getCurrentDocument().getSegmentByName(segment_name)
             procedure_candidate = segment.getProcedureAtAddress(procedure_address)
             if procedure_candidate:
-                
+
                 for basic_block in procedure_candidate.basicBlockIterator():
                     basic_block_start = basic_block.getStartingAddress()
                     instr_cursor = basic_block_start
