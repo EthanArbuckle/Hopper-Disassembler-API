@@ -92,41 +92,53 @@ class DecompileProcedure:
     PATH = "/decompile"
 
     @classmethod
-    def run(cls, segment_name, procedure_address):
-        if not procedure_address or not segment_name:
-            raise Exception("did not specify a segment name or procedure address")
+    def run(cls, procedure_address):
+        if not procedure_address:
+            raise Exception("did not specify procedure address")
+        
+        # Hopper's API requires you to know the segment that contains a procedure (even though procs are
+        # referenced by their absolute address in the binary).
+        # Try all known segments
+        for segment_name in ListSegments.run():
+            segment = Document.getCurrentDocument().getSegmentByName(segment_name)
+            procedure_candidate = segment.getProcedureAtAddress(procedure_address)
+            if procedure_candidate:
+                return procedure_candidate.decompile()
 
-        seg = Document.getCurrentDocument().getSegmentByName(segment_name)
-        procedure = seg.getProcedureAtAddress(procedure_address)
-
-        return procedure.decompile()
+        raise Exception("Failed to find the specified procedure")
 
 
 class DisassembleProcedure:
     PATH = "/disassemble"
 
     @classmethod
-    def run(cls, segment_name, procedure_address):
-        if not procedure_address or not segment_name:
-            raise Exception("did not specify a segment name or procedure address")
+    def run(cls, procedure_address):
+        if not procedure_address:
+            raise Exception("did not specify procedure address")
 
         disassembly = ""
 
-        seg = Document.getCurrentDocument().getSegmentByName(segment_name)
-        procedure = seg.getProcedureAtAddress(procedure_address)
-        for basic_block in procedure.basicBlockIterator():
-            basic_block_start = basic_block.getStartingAddress()
-            instr_cursor = basic_block_start
-            while instr_cursor < basic_block.getEndingAddress():
-                instr = seg.getInstructionAtAddress(instr_cursor)
-                instr_args = [instr.getFormattedArgument(i) for i in xrange(instr.getArgumentCount())]
+        # Hopper's API requires you to know the segment that contains a procedure (even though procs are
+        # referenced by their absolute address in the binary).
+        # Try all known segments
+        for segment_name in ListSegments.run():
+            segment = Document.getCurrentDocument().getSegmentByName(segment_name)
+            procedure_candidate = segment.getProcedureAtAddress(procedure_address)
+            if procedure_candidate:
+                
+                for basic_block in procedure_candidate.basicBlockIterator():
+                    basic_block_start = basic_block.getStartingAddress()
+                    instr_cursor = basic_block_start
+                    while instr_cursor < basic_block.getEndingAddress():
+                        instr = segment.getInstructionAtAddress(instr_cursor)
+                        instr_args = [instr.getFormattedArgument(i) for i in xrange(instr.getArgumentCount())]
 
-                instr_string = instr.getInstructionString() + "  "
-                instr_string += ", ".join(instr_args)
-                instr_string += "\n"
-                disassembly += instr_string
+                        instr_string = instr.getInstructionString() + "  "
+                        instr_string += ", ".join(instr_args)
+                        instr_string += "\n"
+                        disassembly += instr_string
 
-                instr_cursor += instr.getInstructionLength()
+                        instr_cursor += instr.getInstructionLength()
         # Maybe this should return a list of instructions, instead of combining them into 1 string?
         return disassembly
 
