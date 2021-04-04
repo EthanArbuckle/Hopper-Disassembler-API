@@ -9,13 +9,27 @@
 import json
 import subprocess
 import typing
+from abc import abstractmethod
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 if typing.TYPE_CHECKING:
     from hopper_api import Document
 
 
-class TerminateHopper:
+class HopperHandler:
+    @abstractmethod
+    def run(cls):
+        pass
+
+    @classmethod
+    def get_document_named(cls, document_name):
+        for document in Document.getAllDocuments():
+            if document.getDocumentName() == document_name:
+                return document
+        raise Exception("failed to find specified document")
+
+
+class TerminateHopper(HopperHandler):
     PATH = "/terminate"
 
     @classmethod
@@ -37,24 +51,26 @@ class TerminateHopper:
         pass
 
 
-class ListSegments:
+class ListSegments(HopperHandler):
     PATH = "/segments"
 
     @classmethod
-    def run(cls):
-        segments = Document.getCurrentDocument().getSegmentsList()
+    def run(cls, document_name):
+        document = cls.get_document_named(document_name)
+        segments = document.getSegmentsList()
         return [segment.getName() for segment in segments]
 
 
-class ListProcedures:
+class ListProcedures(HopperHandler):
     PATH = "/procedures"
 
     @classmethod
-    def run(cls):
+    def run(cls, document_name):
+        document = cls.get_document_named(document_name)
 
         named_procedures = []
         for segment_name in ListSegments.run():
-            segment = Document.getCurrentDocument().getSegmentByName(segment_name)
+            segment = document.getSegmentByName(segment_name)
             for label_address in segment.getNamedAddresses():
                 named_procedures.append(
                     {
@@ -66,14 +82,15 @@ class ListProcedures:
         return named_procedures
 
 
-class ListStrings:
+class ListStrings(HopperHandler):
     PATH = "/strings"
 
     @classmethod
-    def run(cls):
-        doc = Document.getCurrentDocument()
-        cstrings_sect = doc.getSectionByName("__cstring")
-        text_seg = doc.getSegmentByName("__TEXT")
+    def run(cls, document_name):
+        document = cls.get_document_named(document_name)
+
+        cstrings_sect = document.getSectionByName("__cstring")
+        text_seg = document.getSegmentByName("__TEXT")
         cstring_start = cstrings_sect.getStartingAddress()
 
         string_cursor = 0
@@ -86,19 +103,21 @@ class ListStrings:
         return strings
 
 
-class DecompileProcedure:
+class DecompileProcedure(HopperHandler):
     PATH = "/decompile"
 
     @classmethod
-    def run(cls, procedure_address):
+    def run(cls, document_name, procedure_address):
         if not procedure_address:
             raise Exception("did not specify procedure address")
+
+        document = cls.get_document_named(document_name)
 
         # Hopper's API requires you to know the segment that contains a procedure (even though procs are
         # referenced by their absolute address in the binary).
         # Try all known segments
         for segment_name in ListSegments.run():
-            segment = Document.getCurrentDocument().getSegmentByName(segment_name)
+            segment = document.getSegmentByName(segment_name)
             procedure_candidate = segment.getProcedureAtAddress(procedure_address)
             if procedure_candidate:
                 return procedure_candidate.decompile()
@@ -106,11 +125,12 @@ class DecompileProcedure:
         raise Exception("Failed to find the specified procedure")
 
 
-class DisassembleProcedure:
+class DisassembleProcedure(HopperHandler):
     PATH = "/disassemble"
 
     @classmethod
-    def run(cls, procedure_address):
+    def run(cls, document_name, procedure_address):
+        document = cls.get_document_named(document_name)
         if not procedure_address:
             raise Exception("did not specify procedure address")
 
@@ -120,7 +140,7 @@ class DisassembleProcedure:
         # referenced by their absolute address in the binary).
         # Try all known segments
         for segment_name in ListSegments.run():
-            segment = Document.getCurrentDocument().getSegmentByName(segment_name)
+            segment = document.getSegmentByName(segment_name)
             procedure_candidate = segment.getProcedureAtAddress(procedure_address)
             if procedure_candidate:
 
@@ -141,6 +161,19 @@ class DisassembleProcedure:
         return disassembly
 
 
+class ListDocuments(HopperHandler):
+    PATH = "/documents"
+
+    @classmethod
+    def run(cls):
+
+        documents = []
+        for document in Document.getAllDocuments():
+            documents.append(document.getDocumentName())
+
+        return documents
+
+
 class RequestHandler(BaseHTTPRequestHandler):
     def do_POST(self):
         content_length = int(self.headers.get("Content-Length", 0))
@@ -149,7 +182,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         data_response = None
         error = None
 
-        for handler in [ListSegments, ListProcedures, DecompileProcedure, TerminateHopper, ListStrings, DisassembleProcedure]:
+        for handler in [ListSegments, ListProcedures, DecompileProcedure, TerminateHopper, ListStrings, DisassembleProcedure, ListDocuments]:
             if self.path == handler.PATH:
 
                 try:
@@ -172,7 +205,7 @@ class RequestHandler(BaseHTTPRequestHandler):
                 self.wfile.write(json.dumps(response).encode("utf-8"))
 
 
-if __name__ == "__main__":
+def start_server():
 
     httpd = HTTPServer(("", 52349), RequestHandler)
 

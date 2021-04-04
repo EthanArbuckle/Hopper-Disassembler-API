@@ -1,9 +1,10 @@
 import subprocess
 import time
 from pathlib import Path
+
 from hopper_proxy import TerminateHopper
 
-TerminateHopper.kill_hopper()
+# TerminateHopper.kill_hopper()
 
 testbin_path = Path("lzssdec").resolve()
 proxy_script_path = Path("hopper_proxy.py").resolve()
@@ -13,7 +14,7 @@ hopper_path = "/Applications/Hopper Disassembler v4.app/Contents/MacOS/hopper"
 # Work around the "missing loader" bug
 for _ in range(2):
     try:
-        subprocess.check_output([hopper_path, "-e", testbin_path, "-l", "Mach-O", "--aarch64", "-Y", proxy_script_path.as_posix()], stderr=subprocess.STDOUT)
+        subprocess.check_output([hopper_path, "-e", testbin_path, "-l", "Mach-O", "--aarch64", "-Y", proxy_script_path.as_posix(), "-y", "start_server()"], stderr=subprocess.STDOUT)
         break
     except subprocess.CalledProcessError as e:
         if e.stdout and b"The handler some object is not defined." in e.stdout:
