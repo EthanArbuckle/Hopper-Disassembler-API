@@ -16,7 +16,7 @@ if typing.TYPE_CHECKING:
     from hopper_api import Document
 
 
-class HopperHandler:
+class HopperHandler(object):
     @abstractmethod
     def run(cls):
         pass
@@ -174,6 +174,24 @@ class ListDocuments(HopperHandler):
         return documents
 
 
+class BackgroundProcessActive(HopperHandler):
+    PATH = "/analysis"
+
+    @classmethod
+    def run(cls, document_name):
+        document = cls.get_document_named(document_name)
+        return {"active": document.backgroundProcessActive()}
+
+
+class DocumentFilePath(HopperHandler):
+    PATH = "/filepath"
+
+    @classmethod
+    def run(cls, document_name):
+        document = cls.get_document_named(document_name)
+        return document.getExecutableFilePath()
+
+
 class RequestHandler(BaseHTTPRequestHandler):
     def do_POST(self):
         content_length = int(self.headers.get("Content-Length", 0))
@@ -182,7 +200,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         data_response = None
         error = None
 
-        for handler in [ListSegments, ListProcedures, DecompileProcedure, TerminateHopper, ListStrings, DisassembleProcedure, ListDocuments]:
+        for handler in HopperHandler.__subclasses__():
             if self.path == handler.PATH:
 
                 try:
