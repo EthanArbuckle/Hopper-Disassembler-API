@@ -15,12 +15,10 @@
 
 static NSDictionary *(^allDocuments)(void) = ^id() {
     NSMutableDictionary *docNamesAndDocs = [[NSMutableDictionary alloc] init];
-    // allDocuments = +[HopperAppDelegate allDocuments];
-    NSArray *allDocuments = ((id (*)(id, SEL))objc_msgSend)(NSClassFromString(@"HopperAppDelegate"), NSSelectorFromString(@"allDocuments"));
-    
+
+    NSArray *allDocuments = objcInvoke(NSClassFromString(@"HopperAppDelegate"), @"allDocuments");
     for (id document in allDocuments) {
-        // documentName = [document documentName]
-        NSString *documentName = ((id (*)(id, SEL))objc_msgSend)(document, NSSelectorFromString(@"documentName"));
+        NSString *documentName = objcInvoke(document, @"documentName");
         docNamesAndDocs[documentName] = document;
     }
     return docNamesAndDocs;
@@ -36,7 +34,7 @@ __attribute__((constructor)) void init(void) {
         
         [webServer addHandlerForMethod:@"POST" path:path requestClass:[GCDWebServerDataRequest class] processBlock:^GCDWebServerResponse * _Nullable(__kindof GCDWebServerDataRequest * _Nonnull request) {
             
-            NSDictionary *requestBody = [NSJSONSerialization JSONObjectWithData:[request data] options:0 error:nil];
+            NSDictionary *requestBody = [NSJSONSerialization JSONObjectWithData:request.data options:0 error:nil];
             NSString *requestedDocument = requestBody[@"document_name"];
 
             id hopperDocument = nil;
@@ -52,7 +50,7 @@ __attribute__((constructor)) void init(void) {
                     }
                 }
                                 
-                disassembledFile = ((id (*)(id, SEL))objc_msgSend)(hopperDocument, NSSelectorFromString(@"disassembledFile"));
+                disassembledFile = objcInvoke(hopperDocument, @"disassembledFile");
             }
             
             id handlerResponse = handler(requestBody, hopperDocument, disassembledFile);

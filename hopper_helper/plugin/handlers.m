@@ -17,7 +17,7 @@ HandlerBlock StringsHandler = ^id(NSDictionary *requestData, id hopperDocument, 
         return nil;
     }
 
-    return ((id (*)(id, SEL))objc_msgSend)(disassembledFile, NSSelectorFromString(@"allStrings"));
+    return objcInvoke(disassembledFile, @"allStrings");
 };
 
 
@@ -28,11 +28,11 @@ HandlerBlock SegmentsHandler = ^id(NSDictionary *requestData, id hopperDocument,
         return nil;
     }
 
-    NSArray *segments = ((id (*)(id, SEL))objc_msgSend)(disassembledFile, NSSelectorFromString(@"segments"));
+    NSArray *segments = objcInvoke(disassembledFile, @"segments");
     
     NSMutableArray *segmentNames = [[NSMutableArray alloc] init];
     for (id segment in segments) {
-        NSString *segmentName = ((id (*)(id, SEL))objc_msgSend)(segment, NSSelectorFromString(@"segmentName"));
+        NSString *segmentName = objcInvoke(segment, @"segmentName");
         [segmentNames addObject:segmentName];
     }
     
@@ -47,12 +47,12 @@ HandlerBlock ProceduresHandler = ^id(NSDictionary *requestData, id hopperDocumen
         return nil;
     }
 
-    NSArray *allNamedAddresses = ((id (*)(id, SEL))objc_msgSend)(disassembledFile, NSSelectorFromString(@"allNamedAddresses"));
+    NSArray *allNamedAddresses = objcInvoke(disassembledFile, @"allNamedAddresses");
     
     NSMutableArray *response = [[NSMutableArray alloc] init];
     for (id address in allNamedAddresses) {
         
-        NSString *demangledName = ((id (*)(id, SEL, int64_t))objc_msgSend)(disassembledFile, NSSelectorFromString(@"demangledNameForVirtualAddress:"), [address unsignedLongLongValue]);
+        NSString *demangledName = objcInvoke_1(disassembledFile, @"demangledNameForVirtualAddress:", [address longLongValue]);
         NSDictionary *namedEntry = @{
             @"address": @([address unsignedLongLongValue]),
             @"label": demangledName,
@@ -71,14 +71,14 @@ HandlerBlock DecompileHandler = ^id(NSDictionary *requestData, id hopperDocument
     if (!disassembledFile || !procedureAddress) {
         return nil;
     }
-
-    id procedure = ((id (*)(id, SEL, uint64_t))objc_msgSend)(disassembledFile, NSSelectorFromString(@"procedureAt:"), [procedureAddress longLongValue]);
+    
+    id procedure = objcInvoke_1(disassembledFile, @"procedureAt:", [procedureAddress longLongValue]);
     if (!procedure) {
         return nil;
     }
     
-    id pseudoCode = ((id (*)(id, SEL))objc_msgSend)(procedure, NSSelectorFromString(@"completePseudoCode"));
-    NSString *pseudoCodeString = ((id (*)(id, SEL))objc_msgSend)(pseudoCode, NSSelectorFromString(@"string"));
+    id pseudoCode = objcInvoke(procedure, @"completePseudoCode");
+    NSString *pseudoCodeString = objcInvoke(pseudoCode, @"string");
 
     return pseudoCodeString;
 };
@@ -92,24 +92,24 @@ HandlerBlock DisassembleHandler = ^id(NSDictionary *requestData, id hopperDocume
         return nil;
     }
 
-    id procedure = ((id (*)(id, SEL, uint64_t))objc_msgSend)(disassembledFile, NSSelectorFromString(@"procedureAt:"), [procedureAddress longLongValue]);
+    id procedure = objcInvoke_1(disassembledFile, @"procedureAt:", [procedureAddress longLongValue]);
     if (!procedure) {
         return nil;
     }
-    NSArray *basicBlocks = ((id (*)(id, SEL))objc_msgSend)(procedure, NSSelectorFromString(@"basicBlocks"));
-    id containingSegment = ((id (*)(id, SEL, uint64_t))objc_msgSend)(disassembledFile, NSSelectorFromString(@"segmentForVirtualAddress:"), [procedureAddress longLongValue]);
+    NSArray *basicBlocks = objcInvoke(procedure, @"basicBlocks");
+    id containingSegment = objcInvoke_1(disassembledFile, @"segmentForVirtualAddress:", [procedureAddress longLongValue]);
     
     NSMutableString *procedureAssemblyText = [[NSMutableString alloc] init];
     for (id basicBlock in basicBlocks) {
         
-        uint64_t instrCursor = ((uint64_t (*)(id, SEL))objc_msgSend)(basicBlock, NSSelectorFromString(@"from"));
-        uint64_t basicBlockEndAddress = ((uint64_t (*)(id, SEL))objc_msgSend)(basicBlock, NSSelectorFromString(@"to"));
+        uint64_t instrCursor = objcInvokeT(basicBlock, @"from", uint64_t);
+        uint64_t basicBlockEndAddress = objcInvokeT(basicBlock, @"to", uint64_t);
         while (instrCursor <= basicBlockEndAddress) {
             
             NSArray *asmLines = ((id (*)(id, SEL, uint64_t, BOOL, BOOL, BOOL, BOOL, BOOL))objc_msgSend)(containingSegment, NSSelectorFromString(@"stringsForVirtualAddress:includingDecorations:inlineComments:addressField:hexColumn:compactMode:"), instrCursor, YES, YES, YES, NO, NO);
             
             for (id asmLine in asmLines) {
-                NSString *assemblyLineText = ((id (*)(id, SEL))objc_msgSend)(asmLine, NSSelectorFromString(@"string"));
+                NSString *assemblyLineText = objcInvoke(asmLine, @"string");
                 [procedureAssemblyText appendString:assemblyLineText];
                 [procedureAssemblyText appendString:@"\n"];
             }
@@ -129,7 +129,7 @@ HandlerBlock FilePathHandler = ^id(NSDictionary *requestData, id hopperDocument,
         return nil;
     }
 
-    return ((id (*)(id, SEL))objc_msgSend)(disassembledFile, NSSelectorFromString(@"originalFilePath"));
+    return objcInvoke(disassembledFile, @"originalFilePath");
 };
 
 
@@ -148,14 +148,14 @@ HandlerBlock ProcedureSignatureHandler = ^id(NSDictionary *requestData, id hoppe
     if (!disassembledFile || !procedureAddress) {
         return nil;
     }
-
-    id procedure = ((id (*)(id, SEL, uint64_t))objc_msgSend)(disassembledFile, NSSelectorFromString(@"procedureAt:"), [procedureAddress longLongValue]);
+    
+    id procedure = objcInvoke_1(disassembledFile, @"procedureAt:", [procedureAddress longLongValue]);
     if (!procedure) {
         return nil;
     }
     
-    id signaturePseudoCode = ((id (*)(id, SEL))objc_msgSend)(procedure, NSSelectorFromString(@"signaturePseudoCode"));
-    return ((id (*)(id, SEL))objc_msgSend)(signaturePseudoCode, NSSelectorFromString(@"string"));
+    id signaturePseudoCode = objcInvoke(procedure, @"signaturePseudoCode");
+    return objcInvoke(signaturePseudoCode, @"string");
 };
 
 
@@ -166,7 +166,7 @@ HandlerBlock StatusHandler = ^id(NSDictionary *requestData, id hopperDocument, i
         return nil;
     }
 
-    BOOL activeAnalysis = ((BOOL (*)(id, SEL))objc_msgSend)(disassembledFile, NSSelectorFromString(@"analysisInProgress"));
+    BOOL activeAnalysis = objcInvokeT(disassembledFile, @"analysisInProgress", BOOL);
     return @{@"analysis_active": @(activeAnalysis)};
 };
 
@@ -180,9 +180,9 @@ HandlerBlock XrefsHandler = ^id(NSDictionary *requestData, id hopperDocument, id
     }
     
     uint64_t address = [procedureAddress longLongValue];
-    id containingSegment = ((id (*)(id, SEL, uint64_t))objc_msgSend)(disassembledFile, NSSelectorFromString(@"segmentForVirtualAddress:"), address);
-    id xrefAsmLine = ((id (*)(id, SEL, uint64_t))objc_msgSend)(containingSegment, NSSelectorFromString(@"formatXREFStringForAddress:"), address);
-    return ((id (*)(id, SEL))objc_msgSend)(xrefAsmLine, NSSelectorFromString(@"string"));
+    id containingSegment = objcInvoke_1(disassembledFile, @"segmentForVirtualAddress:", address);
+    id xrefAsmLine = objcInvoke_1(containingSegment, @"formatXREFStringForAddress:", address);
+    return objcInvoke(xrefAsmLine, @"string");
 };
 
 
@@ -193,6 +193,6 @@ HandlerBlock LogMessagesHandler = ^id(NSDictionary *requestData, id hopperDocume
         return nil;
     }
     
-    id logView = ((id (*)(id, SEL))objc_msgSend)(hopperDocument, NSSelectorFromString(@"logView"));
-    return ((id (*)(id, SEL))objc_msgSend)(logView, NSSelectorFromString(@"string"));
+    id logView = objcInvoke(hopperDocument, @"logView");
+    return objcInvoke(logView, @"string");
 };

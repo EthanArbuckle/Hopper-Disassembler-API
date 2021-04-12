@@ -10,6 +10,10 @@
 
 #import "GCDWebServerDataResponse.h"
 
+#define objcInvokeT(a, b, t) ((t (*)(id, SEL))objc_msgSend)(a, NSSelectorFromString(b))
+#define objcInvoke(a, b) objcInvokeT(a, b, id)
+#define objcInvoke_1(a, b, c) ((id (*)(id, SEL, typeof(c)))objc_msgSend)(a, NSSelectorFromString(b), c)
+
 
 typedef id (^HandlerBlock)(NSDictionary *, id, id);
 
