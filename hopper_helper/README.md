@@ -1,1 +1,1 @@
-Move the produced .hopperCPU bundle to `~/Library/Application Support/Hopper/PlugIns/v4/CPUs/HopperTweakStudio.hopperCPU`. You can make it a symlink the this project's build output for debugging convenience
+Move the produced .hopperCPU bundle to `~/Library/Application Support/Hopper/PlugIns/v4/CPUs/HopperTweakStudio.hopperCPU`. You can make it a symlink to this project's build output for debugging convenience

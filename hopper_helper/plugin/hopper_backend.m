@@ -82,5 +82,5 @@ __attribute__((constructor)) void init(void) {
         return [GCDWebServerDataResponse responseWithJSONObject:@{@"data": allDocumentNames}];
     }];
     
-    [webServer startWithPort:8080 bonjourName:nil];
+    [webServer startWithPort:52349 bonjourName:nil];
 }

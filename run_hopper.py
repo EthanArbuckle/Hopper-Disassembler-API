@@ -19,13 +19,12 @@ logger.addHandler(ch)
 
 TerminateHopper.kill_hopper()
 
-proxy_script_path = Path("hopper_proxy.py").resolve()
 hopper_path = "/Applications/Hopper Disassembler v4.app/Contents/MacOS/hopper"
 
 
 def server_list_documents(port):
     endpoint = f"http://localhost:{port}/documents"
-    response = requests.post(endpoint)
+    response = requests.get(endpoint)
     return response.json().get("data")
 
 
@@ -69,15 +68,10 @@ def launch_server():
     """Launch Hopper with a dummy document and start a proxy server."""
     # Small dummy binary (TODO: use smaller binary)
     dummy_document = Path("lzssdec").resolve()
-    # Tell Hopper to load the proxy script and invoke start_server()
     hopper_args = [
         "-l",
         "Mach-O",
         "--intel-64",
-        "-Y",
-        proxy_script_path.as_posix(),
-        "-y",
-        "start_server()",
     ]
     # Launch the hopper server. This server will handle requests for any subsequent Documents that are opened.
     # This is basically idempotent - repeat launches will silently fail to bind the server port
