@@ -20,6 +20,8 @@ extern HandlerBlock DecompileHandler;
 extern HandlerBlock DisassembleHandler;
 extern HandlerBlock FilePathHandler;
 extern HandlerBlock TerminateHandler;
-extern HandlerBlock procedureSignatureHandler;
+extern HandlerBlock ProcedureSignatureHandler;
+extern HandlerBlock StatusHandler;
+extern HandlerBlock XrefsHandler;
 
 #endif /* handlers_h */
