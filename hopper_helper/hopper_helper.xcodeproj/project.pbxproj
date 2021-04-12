@@ -7,20 +7,31 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5F32854F261CE91600CABD04 /* hopper_helper.h in Headers */ = {isa = PBXBuildFile; fileRef = 5F32854E261CE91600CABD04 /* hopper_helper.h */; };
-		5F328551261CE91600CABD04 /* hopper_helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F328550261CE91600CABD04 /* hopper_helper.m */; };
-		5FCA9B462622CE140054C807 /* launcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FCA9B452622CE140054C807 /* launcher.h */; };
-		5FCA9B482622CE140054C807 /* launcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCA9B472622CE140054C807 /* launcher.m */; };
+		5F328551261CE91600CABD04 /* hopper_backend.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F328550261CE91600CABD04 /* hopper_backend.m */; };
+		5FCA9B78262413780054C807 /* launch_shim.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCA9B472622CE140054C807 /* launch_shim.m */; };
+		5FCA9B852624152A0054C807 /* libTweakStudio_HopperBackend.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 5F32854B261CE91600CABD04 /* libTweakStudio_HopperBackend.dylib */; };
+		5FCA9BD0262427B10054C807 /* handlers.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCA9BCF262427B10054C807 /* handlers.m */; };
 		E0194EACE8FC9F78DCA27875 /* libPods-hopper_helper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E56DEAEA3180466D48958855 /* libPods-hopper_helper.a */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		5FCA9B83262415250054C807 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5F328543261CE91600CABD04 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5F32854A261CE91600CABD04;
+			remoteInfo = hopper_helper;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
-		5F32854B261CE91600CABD04 /* libhopper_helper.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libhopper_helper.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
-		5F32854E261CE91600CABD04 /* hopper_helper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = hopper_helper.h; sourceTree = "<group>"; };
-		5F328550261CE91600CABD04 /* hopper_helper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = hopper_helper.m; sourceTree = "<group>"; };
-		5FCA9B432622CE140054C807 /* liblauncher.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = liblauncher.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
-		5FCA9B452622CE140054C807 /* launcher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = launcher.h; sourceTree = "<group>"; };
-		5FCA9B472622CE140054C807 /* launcher.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = launcher.m; sourceTree = "<group>"; };
+		5F32854B261CE91600CABD04 /* libTweakStudio_HopperBackend.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libTweakStudio_HopperBackend.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F328550261CE91600CABD04 /* hopper_backend.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = hopper_backend.m; sourceTree = "<group>"; };
+		5FCA9B472622CE140054C807 /* launch_shim.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = launch_shim.m; sourceTree = "<group>"; };
+		5FCA9B6D2624135A0054C807 /* HopperTweakStudio.hopperCPU */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HopperTweakStudio.hopperCPU; sourceTree = BUILT_PRODUCTS_DIR; };
+		5FCA9B702624135A0054C807 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5FCA9BCF262427B10054C807 /* handlers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = handlers.m; sourceTree = "<group>"; };
+		5FCA9BD3262427BE0054C807 /* handlers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = handlers.h; sourceTree = "<group>"; };
 		62335AFBE08F27E997628E29 /* Pods-hopper_helper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hopper_helper.release.xcconfig"; path = "Target Support Files/Pods-hopper_helper/Pods-hopper_helper.release.xcconfig"; sourceTree = "<group>"; };
 		79966D0A2DF1D1676C31BAED /* Pods-hopper_helper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hopper_helper.debug.xcconfig"; path = "Target Support Files/Pods-hopper_helper/Pods-hopper_helper.debug.xcconfig"; sourceTree = "<group>"; };
 		E56DEAEA3180466D48958855 /* libPods-hopper_helper.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-hopper_helper.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -35,7 +46,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5FCA9B412622CE140054C807 /* Frameworks */ = {
+		5FCA9B6A2624135A0054C807 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -57,8 +68,8 @@
 		5F328542261CE91600CABD04 = {
 			isa = PBXGroup;
 			children = (
-				5F32854D261CE91600CABD04 /* hopper_helper */,
-				5FCA9B442622CE140054C807 /* launcher */,
+				5F32854D261CE91600CABD04 /* plugin */,
+				5FCA9B6E2624135A0054C807 /* HopperTweakStudio */,
 				5F32854C261CE91600CABD04 /* Products */,
 				562E4A428974592FBEEE86C4 /* Pods */,
 				DD9BF1C8269F08222E4F988C /* Frameworks */,
@@ -68,28 +79,29 @@
 		5F32854C261CE91600CABD04 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5F32854B261CE91600CABD04 /* libhopper_helper.dylib */,
-				5FCA9B432622CE140054C807 /* liblauncher.dylib */,
+				5F32854B261CE91600CABD04 /* libTweakStudio_HopperBackend.dylib */,
+				5FCA9B6D2624135A0054C807 /* HopperTweakStudio.hopperCPU */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		5F32854D261CE91600CABD04 /* hopper_helper */ = {
+		5F32854D261CE91600CABD04 /* plugin */ = {
 			isa = PBXGroup;
 			children = (
-				5F32854E261CE91600CABD04 /* hopper_helper.h */,
-				5F328550261CE91600CABD04 /* hopper_helper.m */,
+				5F328550261CE91600CABD04 /* hopper_backend.m */,
+				5FCA9BD3262427BE0054C807 /* handlers.h */,
+				5FCA9BCF262427B10054C807 /* handlers.m */,
 			);
-			path = hopper_helper;
+			path = plugin;
 			sourceTree = "<group>";
 		};
-		5FCA9B442622CE140054C807 /* launcher */ = {
+		5FCA9B6E2624135A0054C807 /* HopperTweakStudio */ = {
 			isa = PBXGroup;
 			children = (
-				5FCA9B452622CE140054C807 /* launcher.h */,
-				5FCA9B472622CE140054C807 /* launcher.m */,
+				5FCA9B472622CE140054C807 /* launch_shim.m */,
+				5FCA9B702624135A0054C807 /* Info.plist */,
 			);
-			path = launcher;
+			path = HopperTweakStudio;
 			sourceTree = "<group>";
 		};
 		DD9BF1C8269F08222E4F988C /* Frameworks */ = {
@@ -107,56 +119,56 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5F32854F261CE91600CABD04 /* hopper_helper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5FCA9B3F2622CE140054C807 /* Headers */ = {
+		5FCA9B682624135A0054C807 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5FCA9B462622CE140054C807 /* launcher.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		5F32854A261CE91600CABD04 /* hopper_helper */ = {
+		5F32854A261CE91600CABD04 /* pluginBackend */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5F328554261CE91600CABD04 /* Build configuration list for PBXNativeTarget "hopper_helper" */;
+			buildConfigurationList = 5F328554261CE91600CABD04 /* Build configuration list for PBXNativeTarget "pluginBackend" */;
 			buildPhases = (
 				2D7CB22288160F4B529A4E9F /* [CP] Check Pods Manifest.lock */,
 				5F328547261CE91600CABD04 /* Headers */,
 				5F328548261CE91600CABD04 /* Sources */,
 				5F328549261CE91600CABD04 /* Frameworks */,
-				5FCA9B3D2622CCDA0054C807 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = hopper_helper;
+			name = pluginBackend;
 			productName = hopper_helper;
-			productReference = 5F32854B261CE91600CABD04 /* libhopper_helper.dylib */;
+			productReference = 5F32854B261CE91600CABD04 /* libTweakStudio_HopperBackend.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
-		5FCA9B422622CE140054C807 /* launcher */ = {
+		5FCA9B6C2624135A0054C807 /* HopperTweakStudio */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5FCA9B492622CE140054C807 /* Build configuration list for PBXNativeTarget "launcher" */;
+			buildConfigurationList = 5FCA9B722624135A0054C807 /* Build configuration list for PBXNativeTarget "HopperTweakStudio" */;
 			buildPhases = (
-				5FCA9B3F2622CE140054C807 /* Headers */,
-				5FCA9B402622CE140054C807 /* Sources */,
-				5FCA9B412622CE140054C807 /* Frameworks */,
+				5FCA9B682624135A0054C807 /* Headers */,
+				5FCA9B692624135A0054C807 /* Sources */,
+				5FCA9B6A2624135A0054C807 /* Frameworks */,
+				5FCA9B6B2624135A0054C807 /* Resources */,
+				5FCA9B88262416B70054C807 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				5FCA9B84262415250054C807 /* PBXTargetDependency */,
 			);
-			name = launcher;
-			productName = launcher;
-			productReference = 5FCA9B432622CE140054C807 /* liblauncher.dylib */;
-			productType = "com.apple.product-type.library.dynamic";
+			name = HopperTweakStudio;
+			productName = HopperTweakStudio;
+			productReference = 5FCA9B6D2624135A0054C807 /* HopperTweakStudio.hopperCPU */;
+			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
@@ -169,7 +181,7 @@
 					5F32854A261CE91600CABD04 = {
 						CreatedOnToolsVersion = 12.4;
 					};
-					5FCA9B422622CE140054C807 = {
+					5FCA9B6C2624135A0054C807 = {
 						CreatedOnToolsVersion = 12.4;
 					};
 				};
@@ -187,11 +199,22 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5F32854A261CE91600CABD04 /* hopper_helper */,
-				5FCA9B422622CE140054C807 /* launcher */,
+				5F32854A261CE91600CABD04 /* pluginBackend */,
+				5FCA9B6C2624135A0054C807 /* HopperTweakStudio */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5FCA9B6B2624135A0054C807 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5FCA9B852624152A0054C807 /* libTweakStudio_HopperBackend.dylib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		2D7CB22288160F4B529A4E9F /* [CP] Check Pods Manifest.lock */ = {
@@ -216,9 +239,9 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5FCA9B3D2622CCDA0054C807 /* ShellScript */ = {
+		5FCA9B88262416B70054C807 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (
@@ -231,7 +254,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n#optool uninstall -p \"/System/Library/Frameworks/SystemConfiguration.framework/Versions/A/SystemConfiguration\" -t \"/Users/ethanarbuckle/Library/Developer/Xcode/DerivedData/hopper_helper-fdadstetzzkavhfyejbkvejwzazs/Build/Products/Debug/libhopper_helper.dylib\"\n\n#optool uninstall -p \"/System/Library/Frameworks/CFNetwork.framework/Versions/A/CFNetwork\" -t \"/Users/ethanarbuckle/Library/Developer/Xcode/DerivedData/hopper_helper-fdadstetzzkavhfyejbkvejwzazs/Build/Products/Debug/libhopper_helper.dylib\"\n\n#optool uninstall -p \"/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices\" -t \"/Users/ethanarbuckle/Library/Developer/Xcode/DerivedData/hopper_helper-fdadstetzzkavhfyejbkvejwzazs/Build/Products/Debug/libhopper_helper.dylib\"\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nrm ${BUILT_PRODUCTS_DIR}/HopperTweakStudio.hopperCPU/Resources\nrm ${BUILT_PRODUCTS_DIR}/HopperTweakStudio.hopperCPU/Headers\nrm ${BUILT_PRODUCTS_DIR}/HopperTweakStudio.hopperCPU/Modules\nrm ${BUILT_PRODUCTS_DIR}/HopperTweakStudio.hopperCPU/HopperTweakStudio\nmv ${BUILT_PRODUCTS_DIR}/HopperTweakStudio.hopperCPU/Versions/A/HopperTweakStudio ${BUILT_PRODUCTS_DIR}/HopperTweakStudio.hopperCPU/HopperTweakStudio_shim\nmv ${BUILT_PRODUCTS_DIR}/HopperTweakStudio.hopperCPU/Versions/A/Resources/Info.plist ${BUILT_PRODUCTS_DIR}/HopperTweakStudio.hopperCPU/Info.plist\nmv ${BUILT_PRODUCTS_DIR}/HopperTweakStudio.hopperCPU/Versions/A/Resources/libTweakStudio_HopperBackend.dylib ${BUILT_PRODUCTS_DIR}/HopperTweakStudio.hopperCPU/HopperTweakStudio\nrm -rf ${BUILT_PRODUCTS_DIR}/HopperTweakStudio.hopperCPU/Versions/\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -240,19 +263,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5F328551261CE91600CABD04 /* hopper_helper.m in Sources */,
+				5FCA9BD0262427B10054C807 /* handlers.m in Sources */,
+				5F328551261CE91600CABD04 /* hopper_backend.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5FCA9B402622CE140054C807 /* Sources */ = {
+		5FCA9B692624135A0054C807 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5FCA9B482622CE140054C807 /* launcher.m in Sources */,
+				5FCA9B78262413780054C807 /* launch_shim.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5FCA9B84262415250054C807 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5F32854A261CE91600CABD04 /* pluginBackend */;
+			targetProxy = 5FCA9B83262415250054C807 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		5F328552261CE91600CABD04 /* Debug */ = {
@@ -375,7 +407,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_PREFIX = lib;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TweakStudio_HopperBackend;
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -389,34 +421,66 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_PREFIX = lib;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TweakStudio_HopperBackend;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
-		5FCA9B4A2622CE140054C807 /* Debug */ = {
+		5FCA9B732624135A0054C807 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 44L979X757;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				EXECUTABLE_PREFIX = lib;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = HopperTweakStudio/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ethanarbuckle.HopperTweakStudio;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+				WRAPPER_EXTENSION = hopperCPU;
 			};
 			name = Debug;
 		};
-		5FCA9B4B2622CE140054C807 /* Release */ = {
+		5FCA9B742624135A0054C807 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 44L979X757;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				EXECUTABLE_PREFIX = lib;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = HopperTweakStudio/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ethanarbuckle.HopperTweakStudio;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+				WRAPPER_EXTENSION = hopperCPU;
 			};
 			name = Release;
 		};
@@ -432,7 +496,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5F328554261CE91600CABD04 /* Build configuration list for PBXNativeTarget "hopper_helper" */ = {
+		5F328554261CE91600CABD04 /* Build configuration list for PBXNativeTarget "pluginBackend" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5F328555261CE91600CABD04 /* Debug */,
@@ -441,11 +505,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5FCA9B492622CE140054C807 /* Build configuration list for PBXNativeTarget "launcher" */ = {
+		5FCA9B722624135A0054C807 /* Build configuration list for PBXNativeTarget "HopperTweakStudio" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5FCA9B4A2622CE140054C807 /* Debug */,
-				5FCA9B4B2622CE140054C807 /* Release */,
+				5FCA9B732624135A0054C807 /* Debug */,
+				5FCA9B742624135A0054C807 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
