@@ -77,6 +77,7 @@ __attribute__((constructor)) void init(void) {
     addPostHandler(@"/status", StatusHandler);
     addPostHandler(@"/xrefs", XrefsHandler);
     addPostHandler(@"/logs", LogMessagesHandler);
+    addPostHandler(@"/all_code", AllPseudoCodeHandler);
     
     [webServer addHandlerForMethod:@"GET" path:@"/documents" requestClass:[GCDWebServerRequest class] processBlock:^GCDWebServerResponse * _Nullable(__kindof GCDWebServerRequest * _Nonnull request) {
         

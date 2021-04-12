@@ -196,3 +196,26 @@ HandlerBlock LogMessagesHandler = ^id(NSDictionary *requestData, id hopperDocume
     id logView = objcInvoke(hopperDocument, @"logView");
     return objcInvoke(logView, @"string");
 };
+
+
+// Produce pseudocode for all procedures in a document
+HandlerBlock AllPseudoCodeHandler = ^id(NSDictionary *requestData, id hopperDocument, id disassembledFile) {
+    
+    if (!disassembledFile) {
+        return nil;
+    }
+    
+    NSArray *allProcedures = objcInvoke(disassembledFile, @"allProcedures");
+
+    dispatch_queue_t exportQueue = dispatch_queue_create("com.cryptic-apps.hopper.pseudo-code.export", DISPATCH_QUEUE_SERIAL);
+    __block NSMutableString *allPseudoCode = [[NSMutableString alloc] init];
+    dispatch_apply([allProcedures count], exportQueue, ^(size_t index) {
+        
+        id procedure = allProcedures[index];
+        id pseudoCode = ((id (*)(id, SEL, void *, int))objc_msgSend)(procedure, NSSelectorFromString(@"completePseudoCodeWithCancelationBlock:andOptions:"), NULL, 7);
+        NSString *pseudoCodeString = objcInvoke(pseudoCode, @"string");
+        [allPseudoCode appendFormat:@"%@\n", pseudoCodeString];
+    });
+    
+    return allPseudoCode;
+};

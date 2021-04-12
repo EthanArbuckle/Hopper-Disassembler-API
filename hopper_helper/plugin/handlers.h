@@ -28,5 +28,6 @@ extern HandlerBlock ProcedureSignatureHandler;
 extern HandlerBlock StatusHandler;
 extern HandlerBlock XrefsHandler;
 extern HandlerBlock LogMessagesHandler;
+extern HandlerBlock AllPseudoCodeHandler;
 
 #endif /* handlers_h */
