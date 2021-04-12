@@ -85,5 +85,10 @@ __attribute__((constructor)) void init(void) {
         return [GCDWebServerDataResponse responseWithJSONObject:@{@"data": allDocumentNames}];
     }];
     
-    [webServer startWithPort:52349 bonjourName:nil];
+    int serverPort = 52349;
+    if (![webServer startWithPort:serverPort bonjourName:nil]) {
+
+        NSLog(@"Hopper already running on port: %d", serverPort);
+        exit(0);
+    }
 }

@@ -19,7 +19,8 @@ logger.addHandler(ch)
 
 TerminateHopper.kill_hopper()
 
-hopper_path = "/Applications/Hopper Disassembler v4.app/Contents/MacOS/hopper"
+hopper_launcher_path = "/Applications/Hopper Disassembler v4.app/Contents/MacOS/hopper"
+hopper_path = "/Applications/Hopper Disassembler v4.app/Contents/MacOS/Hopper Disassembler v4"
 
 
 def server_list_documents(port):
@@ -43,13 +44,13 @@ def _launch_binary_workaround_hopper_bug(binary: Path, command_args):
     # Work around the "missing loader" bug
     for _ in range(2):
         try:
-            subprocess.check_output([hopper_path, "-A", "-e", binary.as_posix()] + command_args, stderr=subprocess.STDOUT)
+            subprocess.check_output([hopper_launcher_path, "-A", "-e", binary.as_posix()] + command_args, stderr=subprocess.STDOUT)
             break
         except subprocess.CalledProcessError as e:
             if e.stdout and b"The handler some object is not defined." in e.stdout:
                 # Workaround the bug
                 try:
-                    subprocess.check_output([hopper_path], stderr=subprocess.STDOUT)
+                    subprocess.check_output([hopper_launcher_path], stderr=subprocess.STDOUT)
                 except:
                     pass
                 time.sleep(1)
@@ -76,6 +77,18 @@ def launch_server():
     # Launch the hopper server. This server will handle requests for any subsequent Documents that are opened.
     # This is basically idempotent - repeat launches will silently fail to bind the server port
     _launch_binary_workaround_hopper_bug(dummy_document, hopper_args)
+    
+    
+def find_hopper_server_port():
+    """ Find the port that Hopper's server is running on
+    """
+    try:
+        hopper_launch_output = subprocess.check_output([hopper_path], stderr=subprocess.STDOUT)
+        port = hopper_launch_output.split(b"Hopper already running on port: ")[1]
+        return int(port)
+    except:
+        pass
+    return None
 
 
 def open_binary_in_hopper(binary: Path, arch_flag):
@@ -138,14 +151,19 @@ def wait_for_named_document_with_path(port, document_file_path):
             pass
 
 
-testbin_path = Path("/Users/ethanarbuckle/Downloads/app_downloads/Payload 65/app-decrypt-com.cvs.cvspharmacyr1buo3ck.app/CVSOnlineiPhone")
+testbin_path = Path("/Users/ethanarbuckle/Desktop/decrypt")#Path("/Users/ethanarbuckle/Downloads/app_downloads/Payload 65/app-decrypt-com.cvs.cvspharmacyr1buo3ck.app/CVSOnlineiPhone")
 # Launch a dummy document. It will host the server that handles responses for *all* documents
 launch_server()
-server_port = 52349
+
+# Find the port the server is hosting on
+server_port = find_hopper_server_port()
+if not server_port:
+    print("failed to find server port!")
+    exit(0)
 
 # Wait for the server to launch
 wait_for_document(server_port, "lzssdec.hop")
-logger.info("server launched")
+logger.info(f"server launched on port {server_port}")
 
 # Note the names of the current Hopper documents
 current_hopper_docs = server_list_documents(server_port)
