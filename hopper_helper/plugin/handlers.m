@@ -184,3 +184,15 @@ HandlerBlock XrefsHandler = ^id(NSDictionary *requestData, id hopperDocument, id
     id xrefAsmLine = ((id (*)(id, SEL, uint64_t))objc_msgSend)(containingSegment, NSSelectorFromString(@"formatXREFStringForAddress:"), address);
     return ((id (*)(id, SEL))objc_msgSend)(xrefAsmLine, NSSelectorFromString(@"string"));
 };
+
+
+// Get all the log messages in the Log view for a document
+HandlerBlock LogMessagesHandler = ^id(NSDictionary *requestData, id hopperDocument, id disassembledFile) {
+    
+    if (!disassembledFile) {
+        return nil;
+    }
+    
+    id logView = ((id (*)(id, SEL))objc_msgSend)(hopperDocument, NSSelectorFromString(@"logView"));
+    return ((id (*)(id, SEL))objc_msgSend)(logView, NSSelectorFromString(@"string"));
+};
