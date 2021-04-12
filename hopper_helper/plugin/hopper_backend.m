@@ -68,13 +68,14 @@ __attribute__((constructor)) void init(void) {
         }];
     };
 
-    addPostHandler(@"/strings", strings_handler);
-    addPostHandler(@"/segments", segments_handler);
-    addPostHandler(@"/procedures", procedures_handler);
-    addPostHandler(@"/decompile", decompile_handler);
-    addPostHandler(@"/disassemble", disassemble_handler);
-    addPostHandler(@"/filepath", filepath_handler);
-    addPostHandler(@"/terminate", terminate_handler);
+    addPostHandler(@"/strings", StringsHandler);
+    addPostHandler(@"/segments", SegmentsHandler);
+    addPostHandler(@"/procedures", ProceduresHandler);
+    addPostHandler(@"/decompile", DecompileHandler);
+    addPostHandler(@"/disassemble", DisassembleHandler);
+    addPostHandler(@"/filepath", FilePathHandler);
+    addPostHandler(@"/terminate", TerminateHandler);
+    addPostHandler(@"/procedure_signature", procedureSignatureHandler);
     
     [webServer addHandlerForMethod:@"GET" path:@"/documents" requestClass:[GCDWebServerRequest class] processBlock:^GCDWebServerResponse * _Nullable(__kindof GCDWebServerRequest * _Nonnull request) {
         

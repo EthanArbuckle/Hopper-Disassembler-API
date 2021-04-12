@@ -10,7 +10,7 @@
 #include <objc/message.h>
 
 
-HandlerBlock strings_handler = ^id(NSDictionary *requestData, id hopperDocument, id disassembledFile) {
+HandlerBlock StringsHandler = ^id(NSDictionary *requestData, id hopperDocument, id disassembledFile) {
     
     if (!disassembledFile) {
         return nil;
@@ -20,7 +20,7 @@ HandlerBlock strings_handler = ^id(NSDictionary *requestData, id hopperDocument,
 };
 
 
-HandlerBlock segments_handler = ^id(NSDictionary *requestData, id hopperDocument, id disassembledFile) {
+HandlerBlock SegmentsHandler = ^id(NSDictionary *requestData, id hopperDocument, id disassembledFile) {
     
     if (!disassembledFile) {
         return nil;
@@ -38,7 +38,7 @@ HandlerBlock segments_handler = ^id(NSDictionary *requestData, id hopperDocument
 };
 
 
-HandlerBlock procedures_handler = ^id(NSDictionary *requestData, id hopperDocument, id disassembledFile) {
+HandlerBlock ProceduresHandler = ^id(NSDictionary *requestData, id hopperDocument, id disassembledFile) {
     
     if (!disassembledFile) {
         return nil;
@@ -61,7 +61,7 @@ HandlerBlock procedures_handler = ^id(NSDictionary *requestData, id hopperDocume
 };
 
 
-HandlerBlock decompile_handler = ^id(NSDictionary *requestData, id hopperDocument, id disassembledFile) {
+HandlerBlock DecompileHandler = ^id(NSDictionary *requestData, id hopperDocument, id disassembledFile) {
 
     NSString *procedureAddress = requestData[@"procedure_address"];
     if (!disassembledFile || !procedureAddress) {
@@ -80,7 +80,7 @@ HandlerBlock decompile_handler = ^id(NSDictionary *requestData, id hopperDocumen
 };
 
 
-HandlerBlock disassemble_handler = ^id(NSDictionary *requestData, id hopperDocument, id disassembledFile) {
+HandlerBlock DisassembleHandler = ^id(NSDictionary *requestData, id hopperDocument, id disassembledFile) {
     
     NSString *procedureAddress = requestData[@"procedure_address"];
     if (!disassembledFile || !procedureAddress) {
@@ -119,7 +119,7 @@ HandlerBlock disassemble_handler = ^id(NSDictionary *requestData, id hopperDocum
 };
 
 
-HandlerBlock filepath_handler = ^id(NSDictionary *requestData, id hopperDocument, id disassembledFile) {
+HandlerBlock FilePathHandler = ^id(NSDictionary *requestData, id hopperDocument, id disassembledFile) {
     
     if (!disassembledFile) {
         return nil;
@@ -129,8 +129,25 @@ HandlerBlock filepath_handler = ^id(NSDictionary *requestData, id hopperDocument
 };
 
 
-HandlerBlock terminate_handler = ^id(NSDictionary *requestData, id hopperDocument, id disassembledFile) {
+HandlerBlock TerminateHandler = ^id(NSDictionary *requestData, id hopperDocument, id disassembledFile) {
     
     exit(0);
     return nil;
+};
+
+
+HandlerBlock procedureSignatureHandler = ^id(NSDictionary *requestData, id hopperDocument, id disassembledFile) {
+    
+    NSString *procedureAddress = requestData[@"procedure_address"];
+    if (!disassembledFile || !procedureAddress) {
+        return nil;
+    }
+
+    id procedure = ((id (*)(id, SEL, uint64_t))objc_msgSend)(disassembledFile, NSSelectorFromString(@"procedureAt:"), [procedureAddress longLongValue]);
+    if (!procedure) {
+        return nil;
+    }
+    
+    id signaturePseudoCode = ((id (*)(id, SEL))objc_msgSend)(procedure, NSSelectorFromString(@"signaturePseudoCode"));
+    return ((id (*)(id, SEL))objc_msgSend)(signaturePseudoCode, NSSelectorFromString(@"string"));
 };

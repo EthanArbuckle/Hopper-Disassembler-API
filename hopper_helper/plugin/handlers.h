@@ -13,12 +13,13 @@
 
 typedef id (^HandlerBlock)(NSDictionary *, id, id);
 
-extern HandlerBlock strings_handler;
-extern HandlerBlock segments_handler;
-extern HandlerBlock procedures_handler;
-extern HandlerBlock decompile_handler;
-extern HandlerBlock disassemble_handler;
-extern HandlerBlock filepath_handler;
-extern HandlerBlock terminate_handler;
+extern HandlerBlock StringsHandler;
+extern HandlerBlock SegmentsHandler;
+extern HandlerBlock ProceduresHandler;
+extern HandlerBlock DecompileHandler;
+extern HandlerBlock DisassembleHandler;
+extern HandlerBlock FilePathHandler;
+extern HandlerBlock TerminateHandler;
+extern HandlerBlock procedureSignatureHandler;
 
 #endif /* handlers_h */
