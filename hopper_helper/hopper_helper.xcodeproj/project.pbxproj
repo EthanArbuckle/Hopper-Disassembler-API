@@ -11,7 +11,7 @@
 		5FCA9B78262413780054C807 /* launch_shim.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCA9B472622CE140054C807 /* launch_shim.m */; };
 		5FCA9B852624152A0054C807 /* libTweakStudio_HopperBackend.dylib in Resources */ = {isa = PBXBuildFile; fileRef = 5F32854B261CE91600CABD04 /* libTweakStudio_HopperBackend.dylib */; };
 		5FCA9BD0262427B10054C807 /* handlers.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCA9BCF262427B10054C807 /* handlers.m */; };
-		E0194EACE8FC9F78DCA27875 /* libPods-hopper_helper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E56DEAEA3180466D48958855 /* libPods-hopper_helper.a */; };
+		8160ABCB1FB7E6753784496B /* libPods-pluginBackend.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F68C6695467653E2D6432F68 /* libPods-pluginBackend.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,7 +34,9 @@
 		5FCA9BD3262427BE0054C807 /* handlers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = handlers.h; sourceTree = "<group>"; };
 		62335AFBE08F27E997628E29 /* Pods-hopper_helper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hopper_helper.release.xcconfig"; path = "Target Support Files/Pods-hopper_helper/Pods-hopper_helper.release.xcconfig"; sourceTree = "<group>"; };
 		79966D0A2DF1D1676C31BAED /* Pods-hopper_helper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-hopper_helper.debug.xcconfig"; path = "Target Support Files/Pods-hopper_helper/Pods-hopper_helper.debug.xcconfig"; sourceTree = "<group>"; };
-		E56DEAEA3180466D48958855 /* libPods-hopper_helper.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-hopper_helper.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C7E3288D65293EC4D9AC53CA /* Pods-pluginBackend.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pluginBackend.release.xcconfig"; path = "Target Support Files/Pods-pluginBackend/Pods-pluginBackend.release.xcconfig"; sourceTree = "<group>"; };
+		CC4AE3AD9A0D5107055830D7 /* Pods-pluginBackend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pluginBackend.debug.xcconfig"; path = "Target Support Files/Pods-pluginBackend/Pods-pluginBackend.debug.xcconfig"; sourceTree = "<group>"; };
+		F68C6695467653E2D6432F68 /* libPods-pluginBackend.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-pluginBackend.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,7 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E0194EACE8FC9F78DCA27875 /* libPods-hopper_helper.a in Frameworks */,
+				8160ABCB1FB7E6753784496B /* libPods-pluginBackend.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +63,8 @@
 			children = (
 				79966D0A2DF1D1676C31BAED /* Pods-hopper_helper.debug.xcconfig */,
 				62335AFBE08F27E997628E29 /* Pods-hopper_helper.release.xcconfig */,
+				CC4AE3AD9A0D5107055830D7 /* Pods-pluginBackend.debug.xcconfig */,
+				C7E3288D65293EC4D9AC53CA /* Pods-pluginBackend.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -107,7 +111,7 @@
 		DD9BF1C8269F08222E4F988C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E56DEAEA3180466D48958855 /* libPods-hopper_helper.a */,
+				F68C6695467653E2D6432F68 /* libPods-pluginBackend.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -232,7 +236,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-hopper_helper-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-pluginBackend-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -400,7 +404,7 @@
 		};
 		5F328555261CE91600CABD04 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 79966D0A2DF1D1676C31BAED /* Pods-hopper_helper.debug.xcconfig */;
+			baseConfigurationReference = CC4AE3AD9A0D5107055830D7 /* Pods-pluginBackend.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 44L979X757;
@@ -414,7 +418,7 @@
 		};
 		5F328556261CE91600CABD04 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 62335AFBE08F27E997628E29 /* Pods-hopper_helper.release.xcconfig */;
+			baseConfigurationReference = C7E3288D65293EC4D9AC53CA /* Pods-pluginBackend.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 44L979X757;
